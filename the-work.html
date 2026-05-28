@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Work — Meehir Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+:root{
+  --bg:#080808;--surface:#111;--glass:rgba(255,255,255,0.03);--glass-border:rgba(255,255,255,0.07);
+  --text:#fff;--text-body:rgba(255,255,255,0.58);--text-muted:rgba(255,255,255,0.3);
+  --teal:#39FF14;--blue:#00E5FF;--purple:#E040FB;--pink:#FF3366;--coral:#FF5E3A;--orange:#FF8C42;
+  --glow-teal:rgba(57,255,20,0.25);--glow-blue:rgba(0,229,255,0.2);--glow-coral:rgba(255,94,58,0.2);
+  --divider:rgba(255,255,255,0.06);
+  --r:20px;--r-sm:12px;--r-pill:999px;
+  --heading:'Outfit',sans-serif;--body:'DM Sans',sans-serif;
+}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.7}
+
+/* ===== ANIMATED GRADIENT TEXT ===== */
+.grad-text{background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple),var(--pink),var(--teal));background-size:400% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradShift 12s linear infinite}
+@keyframes gradShift{0%{background-position:0% 50%}100%{background-position:400% 50%}}
+
+/* ===== KINETIC HERO TEXT ===== */
+.hero-word{display:inline-block;opacity:0;transform:translateY(30px);animation:wordIn 0.7s cubic-bezier(0.16,1,0.3,1) forwards}
+.hero-word.grad-text{animation:wordIn 0.7s cubic-bezier(0.16,1,0.3,1) forwards,gradShift 4s linear infinite}
+@keyframes wordIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot{position:fixed;width:16px;height:16px;border-radius:50%;pointer-events:none;z-index:10001;mix-blend-mode:screen;transition:transform 0.18s ease,opacity 0.3s;opacity:0;background:var(--teal);box-shadow:0 0 20px var(--glow-teal),0 0 60px var(--glow-teal)}
+.cursor-dot.active{opacity:0.7}
+.cursor-dot.hover{transform:scale(3);opacity:0.4}
+@media(pointer:coarse){.cursor-dot{display:none}}
+
+/* ===== SPOTLIGHT CARD ===== */
+.spotlight{position:relative;overflow:hidden}
+.spotlight::before{content:'';position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity 0.4s;pointer-events:none;z-index:0}
+.spotlight:hover::before{opacity:1}
+.spotlight>*{position:relative;z-index:1}
+
+/* ===== TYPOGRAPHY ===== */
+h1,h2,h3{font-family:var(--heading);font-weight:700;letter-spacing:-0.03em;text-wrap:balance}
+h1{font-size:clamp(3rem,7.5vw,6.5rem);line-height:0.95}
+h2{font-size:clamp(2rem,4.5vw,3.5rem);line-height:0.98;margin-bottom:1.5rem}
+h3{font-size:clamp(1.3rem,2.5vw,1.8rem);line-height:1.1;margin-bottom:1rem}
+.tag{font-family:var(--body);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:500;color:var(--teal)}
+.body-text{font-size:0.95rem;font-weight:300;line-height:1.85;color:var(--text-body)}
+.body-text p{margin-bottom:1.1rem}
+.body-text p:last-child{margin-bottom:0}
+
+/* ===== NAV ===== */
+.nav{position:sticky;top:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1rem 3rem;background:rgba(8,8,8,0.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider)}
+.nav__name{font-family:var(--heading);font-weight:700;font-size:0.9rem;letter-spacing:-0.01em;color:var(--text);text-decoration:none}
+.nav__links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav__links a{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.25s}
+.nav__links a:hover{color:var(--text)}
+.nav__cta{background:var(--teal)!important;color:var(--bg)!important;padding:0.55rem 1.3rem!important;border-radius:var(--r-pill)!important;font-size:0.62rem!important;font-weight:600!important;letter-spacing:0.08em!important;transition:all 0.3s!important}
+.nav__cta:hover{box-shadow:0 0 20px var(--glow-teal)!important}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;padding:8rem 3rem 5rem;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 40% 50% at 20% 45%,rgba(57,255,20,0.07),transparent 70%),radial-gradient(ellipse 35% 45% at 75% 35%,rgba(0,229,255,0.06),transparent 65%),radial-gradient(ellipse 30% 40% at 50% 80%,rgba(224,64,251,0.04),transparent 60%);pointer-events:none;z-index:0}
+.hero__inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:3fr 2fr;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero h1{margin:1.5rem 0}
+.hero__sub{font-size:1.05rem;font-weight:300;line-height:1.75;color:var(--text-body);max-width:460px;margin-bottom:2.5rem}
+.hero__photo{position:relative}
+.hero__photo img{width:100%;border-radius:var(--r);display:block;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--glass-border)}
+.hero__photo::after{content:"";position:absolute;inset:-1px;border-radius:var(--r);background:linear-gradient(135deg,rgba(0,221,179,0.2),rgba(79,109,255,0.15),rgba(139,92,246,0.1));opacity:0;transition:opacity 0.5s;pointer-events:none;z-index:1}
+.hero__photo:hover::after{opacity:1}
+.hero__watermark{position:absolute;bottom:-8%;left:-3%;font-family:var(--heading);font-weight:800;font-size:clamp(7rem,16vw,14rem);line-height:0.85;pointer-events:none;z-index:1;white-space:nowrap;user-select:none;-webkit-text-stroke:1px rgba(255,255,255,0.04);color:transparent}
+
+/* ===== BUTTONS ===== */
+.btn{font-family:var(--body);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;padding:0.85rem 2rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.3s;border:none;cursor:pointer;border-radius:var(--r-pill)}
+.btn--neon{background:var(--teal);color:var(--bg);font-weight:600}
+.btn--neon:hover{box-shadow:0 0 24px var(--glow-teal),0 0 60px rgba(0,221,179,0.1)}
+.btn--glass{background:var(--glass);color:var(--text);border:1px solid var(--glass-border);backdrop-filter:blur(8px)}
+.btn--glass:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)}
+.btn--dark{background:var(--bg);color:var(--text);border:1px solid var(--divider)}
+.btn--white{background:#fff;color:var(--bg);font-weight:600}
+.btn-row{display:flex;gap:0.75rem;flex-wrap:wrap}
+
+/* ===== SECTIONS ===== */
+.sec{padding:7rem 3rem;position:relative}
+.sec__inner{max-width:1200px;margin:0 auto}
+.sec--dark{background:var(--bg)}
+.sec--surface{background:var(--surface)}
+.sec--teal{background:linear-gradient(135deg,#003D30,#00584A);color:#fff}
+.sec--teal .tag{color:var(--teal)}
+.sec--blue{background:linear-gradient(135deg,#0D1B4A,#1A2D6D);color:#fff}
+.sec--blue .tag{color:var(--blue)}
+.sec--midnight{background:linear-gradient(135deg,#060D1F,#0C1A3A,#0A1230);color:#fff;position:relative;overflow:hidden}
+.sec--midnight::before{content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(ellipse,rgba(0,229,255,0.06),transparent 70%);pointer-events:none}
+.sec--midnight .tag{color:var(--blue)}
+.sec--midnight .testi__name{color:var(--blue);-webkit-text-fill-color:var(--blue)}
+.sec--accent{background:linear-gradient(135deg,var(--teal),var(--blue));color:#fff;overflow:hidden}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+
+/* ===== GLASS CARDS ===== */
+.glass{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.glass--glow{box-shadow:inset 0 1px 0 rgba(255,255,255,0.05)}
+
+/* ===== PROMO ===== */
+.promo{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;padding:2.5rem;border-left:2px solid var(--teal)}
+
+/* ===== RECOGNITION ===== */
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.rec-card{padding:2rem 1.75rem;transition:border-color 0.3s}
+.rec-card:hover{border-color:rgba(0,221,179,0.2)}
+.rec-card p{font-size:0.92rem;line-height:1.78;font-weight:300;color:var(--text-body)}
+.rec-card strong{font-weight:500;color:var(--text)}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:2fr 3fr;gap:4rem;align-items:start}
+.about-photo{border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;border:1px solid var(--glass-border)}
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ===== OUTCOMES ===== */
+.outcomes{display:flex;flex-direction:column;gap:0.75rem}
+.outcome{padding:1.5rem 1.75rem;display:flex;gap:1.25rem;align-items:flex-start}
+.outcome__num{font-family:var(--heading);font-weight:800;font-size:1rem;flex-shrink:0;line-height:1.5}
+.outcome__title{font-family:var(--heading);font-weight:600;font-size:0.88rem;color:var(--text);margin-bottom:0.3rem}
+.outcome__desc{font-size:0.85rem;line-height:1.7;color:var(--text-muted);font-weight:300}
+
+/* ===== STAGES ===== */
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.stage{padding:2.25rem 2rem;display:flex;flex-direction:column;transition:border-color 0.3s}
+.stage:hover{border-color:rgba(79,109,255,0.25)}
+.stage__num{font-family:var(--heading);font-weight:800;font-size:3rem;line-height:1;margin-bottom:0.5rem;opacity:0.12}
+.stage__label{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:500;margin-bottom:0.75rem}
+.stage__title{font-family:var(--heading);font-weight:700;font-size:1.25rem;line-height:1.1;margin-bottom:0.75rem;letter-spacing:-0.02em}
+.stage__desc{font-size:0.85rem;line-height:1.72;color:var(--text-body);font-weight:300;flex:1}
+.pull-link{display:inline-block;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--teal);text-decoration:none;margin-top:1.25rem;transition:all 0.2s}
+.pull-link:hover{text-shadow:0 0 12px var(--glow-teal)}
+
+/* ===== TESTIMONIALS ===== */
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.testi{padding:2.25rem 2rem}
+.testi__quote{font-size:1rem;line-height:1.78;font-weight:300;color:rgba(255,255,255,0.75);margin-bottom:1.5rem;font-style:italic}
+.testi__name{font-family:var(--heading);font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase}
+
+/* ===== CTA ===== */
+.cta-sub{font-size:1rem;font-weight:300;line-height:1.78;color:rgba(255,255,255,0.7);margin:1rem 0 2.5rem;max-width:480px}
+.cta-watermark{position:absolute;top:50%;right:-5%;transform:translateY(-50%);font-family:var(--heading);font-weight:800;font-size:clamp(6rem,14vw,12rem);opacity:0.08;pointer-events:none;white-space:nowrap;user-select:none;line-height:1;color:#fff}
+
+/* ===== PULL TEXT ===== */
+.pull-text{font-size:0.92rem;font-weight:300;color:var(--text-muted);margin-top:1.5rem;margin-bottom:0.5rem;font-style:italic}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--bg);border-top:1px solid var(--divider);padding:3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer__name{font-family:var(--heading);font-weight:600;font-size:0.72rem;color:rgba(255,255,255,0.15)}
+.footer__links{display:flex;gap:2rem;list-style:none}
+.footer__links a{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:rgba(255,255,255,0.15);text-decoration:none;transition:color 0.2s}
+.footer__links a:hover{color:var(--teal)}
+
+/* ===== NOISE OVERLAY ===== */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+
+/* ===== MOBILE NAV ===== */
+.nav__toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:transparent;border:none;padding:4px}
+.nav__toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.25s}
+.nav__toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav__toggle.open span:nth-child(2){opacity:0}
+.nav__toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:960px){
+  .hero__inner,.about-grid,.two-col{grid-template-columns:1fr;gap:2.5rem}
+  .rec-grid,.stages,.testi-grid{grid-template-columns:1fr}
+  .promo{grid-template-columns:1fr;gap:1.5rem}
+  .hero{min-height:auto;padding:5rem 1.5rem 3rem}
+  .hero__watermark{font-size:5rem;bottom:0}
+  .about-photo{max-width:400px}
+  .movement{grid-template-columns:50px 1fr;gap:1rem}
+}
+@media(max-width:640px){
+  .sec{padding:4rem 1.5rem}
+  .nav{padding:0.9rem 1.5rem}
+  .nav__links{display:none}
+  .nav__toggle{display:flex}
+  .nav__links.open{display:flex;flex-direction:column;gap:0;position:fixed;top:52px;left:0;right:0;background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--divider);padding:0.5rem 0;z-index:499}
+  .nav__links.open li{width:100%;text-align:center}
+  .nav__links.open a{display:block;padding:0.9rem 1.5rem;font-size:0.72rem}
+  .nav__links.open .nav__cta{margin:0.75rem 1.5rem;text-align:center;display:block}
+  .footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}
+  .footer__links{flex-wrap:wrap;justify-content:center}
+  .btn-row{flex-direction:column}.btn-row .btn{text-align:center;justify-content:center}
+  .page-hero{padding:5rem 1.5rem 3rem;min-height:auto}
+  .movement{grid-template-columns:1fr}.movement__num{font-size:1.5rem}
+  .chips{gap:0.4rem}.chip{font-size:0.55rem;padding:0.4rem 0.75rem}
+  h1{font-size:clamp(2.2rem,8vw,3.5rem)}
+}
+
+/* ===== FORMS ===== */
+.form-wrap{padding:2.5rem}
+.form-field{display:flex;flex-direction:column;gap:0}
+.form-label{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:0.5rem;font-weight:500}
+input,textarea,select{background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:var(--text);padding:0.85rem 1.25rem;font-family:var(--body);font-size:0.95rem;font-weight:300;outline:none;width:100%;transition:border-color 0.25s;border-radius:var(--r-sm);-webkit-appearance:none}
+input::placeholder,textarea::placeholder{color:var(--text-muted)}
+input:focus,textarea:focus,select:focus{border-color:var(--teal)}
+select option{background:var(--surface);color:var(--text)}
+textarea{resize:vertical}
+
+/* ===== DETAIL CHIPS ===== */
+.chips{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+.chip{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;color:var(--text-muted);background:var(--glass);padding:0.5rem 1rem;border:1px solid var(--glass-border);border-radius:var(--r-pill)}
+
+/* ===== MOVEMENTS ===== */
+.movements{display:flex;flex-direction:column;gap:0.75rem;margin-top:2rem}
+.movement{display:grid;grid-template-columns:80px 1fr;gap:1.5rem;align-items:start;padding:1.75rem 2rem}
+.movement__num{font-family:var(--heading);font-weight:800;font-size:2.2rem;line-height:1;opacity:0.15}
+.movement__title{font-family:var(--heading);font-weight:700;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);margin-bottom:0.5rem}
+.movement__desc{font-size:0.88rem;line-height:1.72;color:var(--text-body);font-weight:300}
+
+/* ===== DETAIL BOX ===== */
+.detail-box{padding:2rem;margin-bottom:0.75rem}
+
+/* ===== PAGE HERO (no photo variant) ===== */
+.page-hero{padding:8rem 3rem 5rem;position:relative;overflow:hidden;min-height:60vh;display:flex;align-items:center}
+.page-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 45% 50% at 30% 50%,rgba(0,221,179,0.06),transparent 70%),radial-gradient(ellipse 35% 45% at 80% 40%,rgba(79,109,255,0.05),transparent 65%);pointer-events:none;z-index:0}
+.page-hero__inner{max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:2}
+.page-hero__watermark{position:absolute;bottom:-15%;right:-5%;font-family:var(--heading);font-weight:800;font-size:clamp(6rem,14vw,12rem);line-height:0.85;pointer-events:none;z-index:1;white-space:nowrap;user-select:none;-webkit-text-stroke:1px rgba(255,255,255,0.03);color:transparent}
+.page-hero__sub{font-size:1.08rem;font-weight:300;line-height:1.75;color:var(--text-body);max-width:580px;margin-bottom:2.5rem}
+
+@media(max-width:960px){.movement{grid-template-columns:50px 1fr;gap:1rem}}
+@media(max-width:640px){.page-hero{padding:5rem 1.5rem 3rem;min-height:auto}.movement{grid-template-columns:1fr}.movement__num{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel">
+/* Shared components */
+function Nav({ activePage }) {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const lnk = (href, label, page) => (
+    <li><a href={href} style={activePage === page ? { color: 'var(--teal)' } : {}} onClick={() => setMenuOpen(false)}>{label}</a></li>
+  );
+  return (
+    <nav className="nav">
+      <a href="index.html" className="nav__name">Meehir Patel</a>
+      <ul className={"nav__links" + (menuOpen ? " open" : "")} id="navLinks">
+        {lnk('beyond-proving.html', 'Free Workshop', 'workshop')}
+        {lnk('the-work.html', 'The Work', 'work')}
+        {lnk('cohort.html', 'Cohort', 'cohort')}
+        {lnk('index.html#about', 'About', 'about')}
+        {lnk('index.html#writing', 'Writing', 'writing')}
+        <li><a href="cohort.html" className="nav__cta" onClick={() => setMenuOpen(false)}>Work With Me</a></li>
+      </ul>
+      <button className={"nav__toggle" + (menuOpen ? " open" : "")} aria-label="Menu" onClick={() => setMenuOpen(!menuOpen)}>
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <span className="footer__name">Meehir Patel · London · 2026</span>
+      <ul className="footer__links">
+        <li><a href="beyond-proving.html">Free Workshop</a></li>
+        <li><a href="https://meehirp.substack.com" target="_blank" rel="noopener">Substack</a></li>
+        <li><a href="https://www.linkedin.com/in/meehirpatel/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="the-work.html">The Work</a></li>
+        <li><a href="cohort.html">Cohort</a></li>
+      </ul>
+    </footer>
+  );
+}
+
+function SpotlightCard({ children, className }) {
+  var ref = React.useRef(null);
+  var handleMove = function(e) {
+    var r = ref.current.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    var bg = ref.current.querySelector('.spotlight-bg');
+    if (bg) bg.style.background = 'radial-gradient(circle 200px at '+x+'px '+y+'px, rgba(57,255,20,0.12), transparent 70%)';
+  };
+  var handleLeave = function() {
+    var bg = ref.current.querySelector('.spotlight-bg');
+    if (bg) bg.style.background = 'transparent';
+  };
+  return (
+    <div ref={ref} className={"glass glass--glow stage " + (className||"")}
+      onMouseMove={handleMove} onMouseLeave={handleLeave}
+      style={{ position:'relative', overflow:'hidden' }}>
+      <div className="spotlight-bg" style={{ position:'absolute', inset:0, borderRadius:'inherit', pointerEvents:'none', transition:'background 0.3s', zIndex:0 }}></div>
+      {React.Children.map(children, function(c){ return c; })}
+    </div>
+  );
+}
+
+Object.assign(window, { Nav, Footer, SpotlightCard });
+
+</script>
+<script type="text/babel">
+/* the-work-page.jsx — The Work */
+
+function App() {
+  return (<>
+    <Nav activePage="work" />
+
+    {/* HERO */}
+    <section className="page-hero">
+      <div className="page-hero__watermark">The Work</div>
+      <div className="page-hero__inner">
+        <span className="tag">The work</span>
+        <h1 className="grad-text" style={{ marginTop:'1.5rem', marginBottom:'1.5rem' }}>Three Stages. One Direction.</h1>
+        <p className="page-hero__sub">This is not a programme you complete. It is a direction you commit to. Each stage builds on the last. The work is the same throughout — the context changes.</p>
+      </div>
+    </section>
+
+    {/* THE MECHANISM */}
+    <section className="sec sec--teal">
+      <div className="sec__inner">
+        <div className="two-col">
+          <div>
+            <span className="tag">The mechanism</span>
+            <h3 style={{ marginTop:'0.75rem' }}>It Does Not Feel Like Fear. That Is Why It Is So Hard to See.</h3>
+            <div className="body-text" style={{ color:'rgba(255,255,255,0.6)' }}>
+              <p>Most people working hard, leading with care, and holding themselves to a high standard are operating from an energy source that is quietly exhausting them. It does not feel like fear. It feels like drive, conscientiousness, ambition.</p>
+              <p>There are two directions. One contracts: avoiding conflict, making the self smaller. The other expands: needing to demonstrate, to be seen as capable. Same root. Opposite directions. Same cost.</p>
+              <p>The natural state is what is already present when neither of those is running. Not something to acquire. The ground is already there.</p>
+            </div>
+          </div>
+          <div>
+            <div className="glass detail-box" style={{ background:'rgba(255,255,255,0.05)', marginBottom:'0.75rem' }}>
+              <span className="tag">The spine</span>
+              <div className="body-text" style={{ marginTop:'0.75rem', color:'rgba(255,255,255,0.55)' }}>
+                <p>One principle runs through every stage of this work.</p>
+                <p style={{ fontSize:'1.05rem', fontWeight:400, color:'#fff', lineHeight:1.65 }}>What you value is shown by what you do when it costs something. Not your intentions. Not your stated commitments. Your choices.</p>
+              </div>
+            </div>
+            <div className="glass detail-box" style={{ background:'rgba(255,255,255,0.05)' }}>
+              <span className="tag">The entry point</span>
+              <div className="body-text" style={{ marginTop:'0.75rem', color:'rgba(255,255,255,0.55)' }}>
+                <p>The natural starting point is a free 60-minute workshop. It gives you a felt experience of the natural state before any analytical work begins.</p>
+              </div>
+              <a href="beyond-proving.html" className="pull-link" style={{ marginTop:'1rem' }}>Attend Beyond Proving →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* THE PREMISE + OUTCOMES */}
+    <section className="sec sec--surface">
+      <div className="sec__inner">
+        <div className="two-col">
+          <div>
+            <span className="tag">The premise</span>
+            <h3 style={{ marginTop:'0.75rem' }}>How You Relate to Others Is a Mirror of How You Relate to Yourself.</h3>
+            <div className="body-text">
+              <p>Every significant pattern in your external relationships — what you attract, what you avoid, what you keep recreating in different forms — is already running inside you. The conflict was never really out there.</p>
+              <p>The mechanism is values. The territory is the whole of your relational life. The action is communication — building a language for your own interior, and learning to use it.</p>
+              <p>The work is simple. It is not easy. What you have dominion over is your attitude to yourself. That is what can be cultivated.</p>
+            </div>
+          </div>
+          <div>
+            <span className="tag">What you leave with</span>
+            <div className="outcomes" style={{ marginTop:'1rem' }}>
+              {[['01','A vocabulary for what you\'re carrying','You can feel it. You can\'t say it precisely. Naming it takes power out of it. Not solved — named.'],
+                ['02','Evidence of who you actually are','Not affirmations. Actual evidence from actual choices that your values are lived, not just held.'],
+                ['03','Different relationships','When you stop projecting the unresolved conflict outward, the outside world changes. Because you do.']
+              ].map(([n,t,d])=>(
+                <div key={n} className="glass outcome"><span className="outcome__num grad-text">{n}</span><div><p className="outcome__title">{t}</p><p className="outcome__desc">{d}</p></div></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* STAGE 1 */}
+    <section className="sec sec--dark">
+      <div className="sec__inner">
+        <span className="tag">Stage 01 — Cohort — Summer 2026</span>
+        <h2 className="grad-text" style={{ marginTop:'0.75rem', display:'inline-block' }}>The Conflict Is You</h2>
+        <div className="two-col" style={{ marginTop:'2rem' }}>
+          <div className="body-text">
+            <p>Most people who come to this work have already tried the obvious things. They understand themselves reasonably well. The wrongness followed them anyway.</p>
+            <p>Four weeks. Eight live sessions. Six to eight people. No recordings. We are in the room together — which means everything that surfaces between people in a group is material.</p>
+          </div>
+          <div>
+            <div className="glass detail-box" style={{ marginBottom:'0.75rem' }}>
+              <span className="tag">What to expect</span>
+              <div className="body-text" style={{ marginTop:'0.75rem' }}><p>Each session is 90 minutes on Zoom. We work with real situations from your life. You will be asked to look at things you may have been avoiding. This is a container, not a course.</p></div>
+            </div>
+            <div className="glass detail-box">
+              <span className="tag">Details</span>
+              <div className="body-text" style={{ marginTop:'0.75rem' }}>
+                <p><strong style={{ color:'#fff', fontWeight:500 }}>When:</strong> Summer 2026. Dates confirmed with participants.</p>
+                <p><strong style={{ color:'#fff', fontWeight:500 }}>Beta price:</strong> £450. Standard from Cohort 2: £650.</p>
+              </div>
+              <a href="cohort.html" className="btn btn--neon" style={{ marginTop:'1.25rem' }}>Express Interest →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* STAGE 2 */}
+    <section className="sec sec--midnight">
+      <div className="sec__inner">
+        <span className="tag">Stage 02</span>
+        <h2 style={{ marginTop:'0.75rem' }}>The Conscious Responder</h2>
+        <div className="two-col" style={{ marginTop:'2rem' }}>
+          <div className="body-text" style={{ color:'rgba(255,255,255,0.6)' }}>
+            <p>You can be clear about who you are when nothing is challenging that. The moment another person is involved — in conflict, in intimacy, under pressure — everything from Stage 1 gets tested.</p>
+            <p>Between what happens to you and how you respond, there is a gap. Stage 2 works with it in live relational contexts, where it is shorter and the pull of conditioning is stronger.</p>
+          </div>
+          <div>
+            <div className="glass detail-box" style={{ background:'rgba(0,229,255,0.04)' }}>
+              <span className="tag">The key distinction</span>
+              <div className="body-text" style={{ marginTop:'0.75rem', color:'rgba(255,255,255,0.5)' }}><p>There is a difference between external information landing in your soup and external opinion entering your centre. Stage 2 develops the ability to tell the difference in real time.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* STAGE 3 */}
+    <section className="sec sec--dark">
+      <div className="sec__inner">
+        <span className="tag">Stage 03</span>
+        <h2 style={{ marginTop:'0.75rem' }}>The Conscious Leader</h2>
+        <div className="two-col" style={{ marginTop:'2rem' }}>
+          <div className="body-text">
+            <p>Leadership amplifies whatever is unresolved in the leader. Stage 3 is where everything from the first two stages meets the question of genuine influence.</p>
+            <p>The tell is attachment: to being right, to being recognised, to impact. Sovereignty means doing what your values require without attachment to how it lands.</p>
+          </div>
+          <div>
+            <div className="glass detail-box" style={{ marginBottom:'0.75rem' }}>
+              <span className="tag">No Unfinished Business</span>
+              <div className="body-text" style={{ marginTop:'0.75rem' }}><p>Finish what you start in every relationship. Leave conversations clean. A conscious leader creates conditions in which the people around them can also name what is real.</p></div>
+            </div>
+            <div className="glass detail-box">
+              <span className="tag">The honest theory of change</span>
+              <div className="body-text" style={{ marginTop:'0.75rem' }}><p>What changes is the quality of interactions inside structures. Those interactions, over time, reshape what the structure permits and produces.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* TESTIMONIALS */}
+    <section className="sec sec--surface">
+      <div className="sec__inner">
+        <span className="tag">From people who have done this work</span>
+        <div className="testi-grid">
+          <div className="glass glass--glow testi"><p className="testi__quote">"He sees the blind spots behind the blind spots, and will tell you things that other people may be too scared to, in service of your higher self."</p><p className="testi__name grad-text" style={{ display:'inline-block' }}>Nim</p></div>
+          <div className="glass glass--glow testi"><p className="testi__quote">"He isn't afraid to ask tough or provocative questions, yet he always maintains a respectful and empathetic demeanour."</p><p className="testi__name grad-text" style={{ display:'inline-block' }}>Karima</p></div>
+        </div>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section className="sec sec--accent" style={{ position:'relative', overflow:'hidden' }}>
+      <div className="cta-watermark">Begin</div>
+      <div className="sec__inner" style={{ maxWidth:700, position:'relative', zIndex:2 }}>
+        <span className="tag" style={{ color:'rgba(255,255,255,0.55)' }}>Where to begin</span>
+        <h2 style={{ marginTop:'0.75rem' }}>The Work Is Already Waiting.</h2>
+        <p className="cta-sub">If you are new to this work, the natural starting point is the free workshop. If you are ready to go further, express your interest in the cohort.</p>
+        <div className="btn-row">
+          <a href="cohort.html" className="btn btn--dark">Express Interest in Stage 1 →</a>
+          <a href="beyond-proving.html" className="btn btn--white">Attend the Free Workshop First</a>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+</script>
+<script>
+// Custom cursor
+(function(){
+  var d=document.getElementById('cursorDot');
+  if(!d||window.matchMedia('(pointer:coarse)').matches)return;
+  var mx=0,my=0,cx=0,cy=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;d.classList.add('active')});
+  document.addEventListener('mouseleave',function(){d.classList.remove('active')});
+  var sel='a,button,[role=button],.glass,.stage,.btn,.testi,.rec-card';
+  document.addEventListener('mouseover',function(e){if(e.target.closest(sel))d.classList.add('hover')});
+  document.addEventListener('mouseout',function(e){if(e.target.closest(sel))d.classList.remove('hover')});
+  function tick(){cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;d.style.left=cx-8+'px';d.style.top=cy-8+'px';requestAnimationFrame(tick)}
+  tick();
+})();
+</script>
+</body>
+</html>

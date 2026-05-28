@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Beyond Proving — Free Workshop — Meehir Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+:root{
+  --bg:#080808;--surface:#111;--glass:rgba(255,255,255,0.03);--glass-border:rgba(255,255,255,0.07);
+  --text:#fff;--text-body:rgba(255,255,255,0.58);--text-muted:rgba(255,255,255,0.3);
+  --teal:#39FF14;--blue:#00E5FF;--purple:#E040FB;--pink:#FF3366;--coral:#FF5E3A;--orange:#FF8C42;
+  --glow-teal:rgba(57,255,20,0.25);--glow-blue:rgba(0,229,255,0.2);--glow-coral:rgba(255,94,58,0.2);
+  --divider:rgba(255,255,255,0.06);
+  --r:20px;--r-sm:12px;--r-pill:999px;
+  --heading:'Outfit',sans-serif;--body:'DM Sans',sans-serif;
+}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.7}
+
+/* ===== ANIMATED GRADIENT TEXT ===== */
+.grad-text{background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple),var(--pink),var(--teal));background-size:400% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradShift 12s linear infinite}
+@keyframes gradShift{0%{background-position:0% 50%}100%{background-position:400% 50%}}
+
+/* ===== KINETIC HERO TEXT ===== */
+.hero-word{display:inline-block;opacity:0;transform:translateY(30px);animation:wordIn 0.7s cubic-bezier(0.16,1,0.3,1) forwards}
+.hero-word.grad-text{animation:wordIn 0.7s cubic-bezier(0.16,1,0.3,1) forwards,gradShift 4s linear infinite}
+@keyframes wordIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot{position:fixed;width:16px;height:16px;border-radius:50%;pointer-events:none;z-index:10001;mix-blend-mode:screen;transition:transform 0.18s ease,opacity 0.3s;opacity:0;background:var(--teal);box-shadow:0 0 20px var(--glow-teal),0 0 60px var(--glow-teal)}
+.cursor-dot.active{opacity:0.7}
+.cursor-dot.hover{transform:scale(3);opacity:0.4}
+@media(pointer:coarse){.cursor-dot{display:none}}
+
+/* ===== SPOTLIGHT CARD ===== */
+.spotlight{position:relative;overflow:hidden}
+.spotlight::before{content:'';position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity 0.4s;pointer-events:none;z-index:0}
+.spotlight:hover::before{opacity:1}
+.spotlight>*{position:relative;z-index:1}
+
+/* ===== TYPOGRAPHY ===== */
+h1,h2,h3{font-family:var(--heading);font-weight:700;letter-spacing:-0.03em;text-wrap:balance}
+h1{font-size:clamp(3rem,7.5vw,6.5rem);line-height:0.95}
+h2{font-size:clamp(2rem,4.5vw,3.5rem);line-height:0.98;margin-bottom:1.5rem}
+h3{font-size:clamp(1.3rem,2.5vw,1.8rem);line-height:1.1;margin-bottom:1rem}
+.tag{font-family:var(--body);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:500;color:var(--teal)}
+.body-text{font-size:0.95rem;font-weight:300;line-height:1.85;color:var(--text-body)}
+.body-text p{margin-bottom:1.1rem}
+.body-text p:last-child{margin-bottom:0}
+
+/* ===== NAV ===== */
+.nav{position:sticky;top:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1rem 3rem;background:rgba(8,8,8,0.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider)}
+.nav__name{font-family:var(--heading);font-weight:700;font-size:0.9rem;letter-spacing:-0.01em;color:var(--text);text-decoration:none}
+.nav__links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav__links a{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.25s}
+.nav__links a:hover{color:var(--text)}
+.nav__cta{background:var(--teal)!important;color:var(--bg)!important;padding:0.55rem 1.3rem!important;border-radius:var(--r-pill)!important;font-size:0.62rem!important;font-weight:600!important;letter-spacing:0.08em!important;transition:all 0.3s!important}
+.nav__cta:hover{box-shadow:0 0 20px var(--glow-teal)!important}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;padding:8rem 3rem 5rem;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 40% 50% at 20% 45%,rgba(57,255,20,0.07),transparent 70%),radial-gradient(ellipse 35% 45% at 75% 35%,rgba(0,229,255,0.06),transparent 65%),radial-gradient(ellipse 30% 40% at 50% 80%,rgba(224,64,251,0.04),transparent 60%);pointer-events:none;z-index:0}
+.hero__inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:3fr 2fr;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero h1{margin:1.5rem 0}
+.hero__sub{font-size:1.05rem;font-weight:300;line-height:1.75;color:var(--text-body);max-width:460px;margin-bottom:2.5rem}
+.hero__photo{position:relative}
+.hero__photo img{width:100%;border-radius:var(--r);display:block;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--glass-border)}
+.hero__photo::after{content:"";position:absolute;inset:-1px;border-radius:var(--r);background:linear-gradient(135deg,rgba(0,221,179,0.2),rgba(79,109,255,0.15),rgba(139,92,246,0.1));opacity:0;transition:opacity 0.5s;pointer-events:none;z-index:1}
+.hero__photo:hover::after{opacity:1}
+.hero__watermark{position:absolute;bottom:-8%;left:-3%;font-family:var(--heading);font-weight:800;font-size:clamp(7rem,16vw,14rem);line-height:0.85;pointer-events:none;z-index:1;white-space:nowrap;user-select:none;-webkit-text-stroke:1px rgba(255,255,255,0.04);color:transparent}
+
+/* ===== BUTTONS ===== */
+.btn{font-family:var(--body);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;padding:0.85rem 2rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.3s;border:none;cursor:pointer;border-radius:var(--r-pill)}
+.btn--neon{background:var(--teal);color:var(--bg);font-weight:600}
+.btn--neon:hover{box-shadow:0 0 24px var(--glow-teal),0 0 60px rgba(0,221,179,0.1)}
+.btn--glass{background:var(--glass);color:var(--text);border:1px solid var(--glass-border);backdrop-filter:blur(8px)}
+.btn--glass:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)}
+.btn--dark{background:var(--bg);color:var(--text);border:1px solid var(--divider)}
+.btn--white{background:#fff;color:var(--bg);font-weight:600}
+.btn-row{display:flex;gap:0.75rem;flex-wrap:wrap}
+
+/* ===== SECTIONS ===== */
+.sec{padding:7rem 3rem;position:relative}
+.sec__inner{max-width:1200px;margin:0 auto}
+.sec--dark{background:var(--bg)}
+.sec--surface{background:var(--surface)}
+.sec--teal{background:linear-gradient(135deg,#003D30,#00584A);color:#fff}
+.sec--teal .tag{color:var(--teal)}
+.sec--blue{background:linear-gradient(135deg,#0D1B4A,#1A2D6D);color:#fff}
+.sec--blue .tag{color:var(--blue)}
+.sec--midnight{background:linear-gradient(135deg,#060D1F,#0C1A3A,#0A1230);color:#fff;position:relative;overflow:hidden}
+.sec--midnight::before{content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(ellipse,rgba(0,229,255,0.06),transparent 70%);pointer-events:none}
+.sec--midnight .tag{color:var(--blue)}
+.sec--midnight .testi__name{color:var(--blue);-webkit-text-fill-color:var(--blue)}
+.sec--accent{background:linear-gradient(135deg,var(--teal),var(--blue));color:#fff;overflow:hidden}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+
+/* ===== GLASS CARDS ===== */
+.glass{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.glass--glow{box-shadow:inset 0 1px 0 rgba(255,255,255,0.05)}
+
+/* ===== PROMO ===== */
+.promo{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;padding:2.5rem;border-left:2px solid var(--teal)}
+
+/* ===== RECOGNITION ===== */
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.rec-card{padding:2rem 1.75rem;transition:border-color 0.3s}
+.rec-card:hover{border-color:rgba(0,221,179,0.2)}
+.rec-card p{font-size:0.92rem;line-height:1.78;font-weight:300;color:var(--text-body)}
+.rec-card strong{font-weight:500;color:var(--text)}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:2fr 3fr;gap:4rem;align-items:start}
+.about-photo{border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;border:1px solid var(--glass-border)}
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ===== OUTCOMES ===== */
+.outcomes{display:flex;flex-direction:column;gap:0.75rem}
+.outcome{padding:1.5rem 1.75rem;display:flex;gap:1.25rem;align-items:flex-start}
+.outcome__num{font-family:var(--heading);font-weight:800;font-size:1rem;flex-shrink:0;line-height:1.5}
+.outcome__title{font-family:var(--heading);font-weight:600;font-size:0.88rem;color:var(--text);margin-bottom:0.3rem}
+.outcome__desc{font-size:0.85rem;line-height:1.7;color:var(--text-muted);font-weight:300}
+
+/* ===== STAGES ===== */
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.stage{padding:2.25rem 2rem;display:flex;flex-direction:column;transition:border-color 0.3s}
+.stage:hover{border-color:rgba(79,109,255,0.25)}
+.stage__num{font-family:var(--heading);font-weight:800;font-size:3rem;line-height:1;margin-bottom:0.5rem;opacity:0.12}
+.stage__label{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:500;margin-bottom:0.75rem}
+.stage__title{font-family:var(--heading);font-weight:700;font-size:1.25rem;line-height:1.1;margin-bottom:0.75rem;letter-spacing:-0.02em}
+.stage__desc{font-size:0.85rem;line-height:1.72;color:var(--text-body);font-weight:300;flex:1}
+.pull-link{display:inline-block;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--teal);text-decoration:none;margin-top:1.25rem;transition:all 0.2s}
+.pull-link:hover{text-shadow:0 0 12px var(--glow-teal)}
+
+/* ===== TESTIMONIALS ===== */
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.testi{padding:2.25rem 2rem}
+.testi__quote{font-size:1rem;line-height:1.78;font-weight:300;color:rgba(255,255,255,0.75);margin-bottom:1.5rem;font-style:italic}
+.testi__name{font-family:var(--heading);font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase}
+
+/* ===== CTA ===== */
+.cta-sub{font-size:1rem;font-weight:300;line-height:1.78;color:rgba(255,255,255,0.7);margin:1rem 0 2.5rem;max-width:480px}
+.cta-watermark{position:absolute;top:50%;right:-5%;transform:translateY(-50%);font-family:var(--heading);font-weight:800;font-size:clamp(6rem,14vw,12rem);opacity:0.08;pointer-events:none;white-space:nowrap;user-select:none;line-height:1;color:#fff}
+
+/* ===== PULL TEXT ===== */
+.pull-text{font-size:0.92rem;font-weight:300;color:var(--text-muted);margin-top:1.5rem;margin-bottom:0.5rem;font-style:italic}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--bg);border-top:1px solid var(--divider);padding:3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer__name{font-family:var(--heading);font-weight:600;font-size:0.72rem;color:rgba(255,255,255,0.15)}
+.footer__links{display:flex;gap:2rem;list-style:none}
+.footer__links a{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:rgba(255,255,255,0.15);text-decoration:none;transition:color 0.2s}
+.footer__links a:hover{color:var(--teal)}
+
+/* ===== NOISE OVERLAY ===== */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+
+/* ===== MOBILE NAV ===== */
+.nav__toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:transparent;border:none;padding:4px}
+.nav__toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.25s}
+.nav__toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav__toggle.open span:nth-child(2){opacity:0}
+.nav__toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:960px){
+  .hero__inner,.about-grid,.two-col{grid-template-columns:1fr;gap:2.5rem}
+  .rec-grid,.stages,.testi-grid{grid-template-columns:1fr}
+  .promo{grid-template-columns:1fr;gap:1.5rem}
+  .hero{min-height:auto;padding:5rem 1.5rem 3rem}
+  .hero__watermark{font-size:5rem;bottom:0}
+  .about-photo{max-width:400px}
+  .movement{grid-template-columns:50px 1fr;gap:1rem}
+}
+@media(max-width:640px){
+  .sec{padding:4rem 1.5rem}
+  .nav{padding:0.9rem 1.5rem}
+  .nav__links{display:none}
+  .nav__toggle{display:flex}
+  .nav__links.open{display:flex;flex-direction:column;gap:0;position:fixed;top:52px;left:0;right:0;background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--divider);padding:0.5rem 0;z-index:499}
+  .nav__links.open li{width:100%;text-align:center}
+  .nav__links.open a{display:block;padding:0.9rem 1.5rem;font-size:0.72rem}
+  .nav__links.open .nav__cta{margin:0.75rem 1.5rem;text-align:center;display:block}
+  .footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}
+  .footer__links{flex-wrap:wrap;justify-content:center}
+  .btn-row{flex-direction:column}.btn-row .btn{text-align:center;justify-content:center}
+  .page-hero{padding:5rem 1.5rem 3rem;min-height:auto}
+  .movement{grid-template-columns:1fr}.movement__num{font-size:1.5rem}
+  .chips{gap:0.4rem}.chip{font-size:0.55rem;padding:0.4rem 0.75rem}
+  h1{font-size:clamp(2.2rem,8vw,3.5rem)}
+}
+
+/* ===== FORMS ===== */
+.form-wrap{padding:2.5rem}
+.form-field{display:flex;flex-direction:column;gap:0}
+.form-label{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:0.5rem;font-weight:500}
+input,textarea,select{background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:var(--text);padding:0.85rem 1.25rem;font-family:var(--body);font-size:0.95rem;font-weight:300;outline:none;width:100%;transition:border-color 0.25s;border-radius:var(--r-sm);-webkit-appearance:none}
+input::placeholder,textarea::placeholder{color:var(--text-muted)}
+input:focus,textarea:focus,select:focus{border-color:var(--teal)}
+select option{background:var(--surface);color:var(--text)}
+textarea{resize:vertical}
+
+/* ===== DETAIL CHIPS ===== */
+.chips{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+.chip{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;color:var(--text-muted);background:var(--glass);padding:0.5rem 1rem;border:1px solid var(--glass-border);border-radius:var(--r-pill)}
+
+/* ===== MOVEMENTS ===== */
+.movements{display:flex;flex-direction:column;gap:0.75rem;margin-top:2rem}
+.movement{display:grid;grid-template-columns:80px 1fr;gap:1.5rem;align-items:start;padding:1.75rem 2rem}
+.movement__num{font-family:var(--heading);font-weight:800;font-size:2.2rem;line-height:1;opacity:0.15}
+.movement__title{font-family:var(--heading);font-weight:700;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);margin-bottom:0.5rem}
+.movement__desc{font-size:0.88rem;line-height:1.72;color:var(--text-body);font-weight:300}
+
+/* ===== DETAIL BOX ===== */
+.detail-box{padding:2rem;margin-bottom:0.75rem}
+
+/* ===== PAGE HERO (no photo variant) ===== */
+.page-hero{padding:8rem 3rem 5rem;position:relative;overflow:hidden;min-height:60vh;display:flex;align-items:center}
+.page-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 45% 50% at 30% 50%,rgba(0,221,179,0.06),transparent 70%),radial-gradient(ellipse 35% 45% at 80% 40%,rgba(79,109,255,0.05),transparent 65%);pointer-events:none;z-index:0}
+.page-hero__inner{max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:2}
+.page-hero__watermark{position:absolute;bottom:-15%;right:-5%;font-family:var(--heading);font-weight:800;font-size:clamp(6rem,14vw,12rem);line-height:0.85;pointer-events:none;z-index:1;white-space:nowrap;user-select:none;-webkit-text-stroke:1px rgba(255,255,255,0.03);color:transparent}
+.page-hero__sub{font-size:1.08rem;font-weight:300;line-height:1.75;color:var(--text-body);max-width:580px;margin-bottom:2.5rem}
+
+@media(max-width:960px){.movement{grid-template-columns:50px 1fr;gap:1rem}}
+@media(max-width:640px){.page-hero{padding:5rem 1.5rem 3rem;min-height:auto}.movement{grid-template-columns:1fr}.movement__num{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<form name="workshop-registration" data-netlify="true" hidden>
+<input type="text" name="name"/><input type="email" name="email"/><select name="format"><option value="london">London</option><option value="online">Online</option><option value="either">Either</option></select><textarea name="message"></textarea>
+</form>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel">
+/* Shared components */
+function Nav({ activePage }) {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const lnk = (href, label, page) => (
+    <li><a href={href} style={activePage === page ? { color: 'var(--teal)' } : {}} onClick={() => setMenuOpen(false)}>{label}</a></li>
+  );
+  return (
+    <nav className="nav">
+      <a href="index.html" className="nav__name">Meehir Patel</a>
+      <ul className={"nav__links" + (menuOpen ? " open" : "")} id="navLinks">
+        {lnk('beyond-proving.html', 'Free Workshop', 'workshop')}
+        {lnk('the-work.html', 'The Work', 'work')}
+        {lnk('cohort.html', 'Cohort', 'cohort')}
+        {lnk('index.html#about', 'About', 'about')}
+        {lnk('index.html#writing', 'Writing', 'writing')}
+        <li><a href="cohort.html" className="nav__cta" onClick={() => setMenuOpen(false)}>Work With Me</a></li>
+      </ul>
+      <button className={"nav__toggle" + (menuOpen ? " open" : "")} aria-label="Menu" onClick={() => setMenuOpen(!menuOpen)}>
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <span className="footer__name">Meehir Patel · London · 2026</span>
+      <ul className="footer__links">
+        <li><a href="beyond-proving.html">Free Workshop</a></li>
+        <li><a href="https://meehirp.substack.com" target="_blank" rel="noopener">Substack</a></li>
+        <li><a href="https://www.linkedin.com/in/meehirpatel/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="the-work.html">The Work</a></li>
+        <li><a href="cohort.html">Cohort</a></li>
+      </ul>
+    </footer>
+  );
+}
+
+function SpotlightCard({ children, className }) {
+  var ref = React.useRef(null);
+  var handleMove = function(e) {
+    var r = ref.current.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    var bg = ref.current.querySelector('.spotlight-bg');
+    if (bg) bg.style.background = 'radial-gradient(circle 200px at '+x+'px '+y+'px, rgba(57,255,20,0.12), transparent 70%)';
+  };
+  var handleLeave = function() {
+    var bg = ref.current.querySelector('.spotlight-bg');
+    if (bg) bg.style.background = 'transparent';
+  };
+  return (
+    <div ref={ref} className={"glass glass--glow stage " + (className||"")}
+      onMouseMove={handleMove} onMouseLeave={handleLeave}
+      style={{ position:'relative', overflow:'hidden' }}>
+      <div className="spotlight-bg" style={{ position:'absolute', inset:0, borderRadius:'inherit', pointerEvents:'none', transition:'background 0.3s', zIndex:0 }}></div>
+      {React.Children.map(children, function(c){ return c; })}
+    </div>
+  );
+}
+
+Object.assign(window, { Nav, Footer, SpotlightCard });
+
+</script>
+<script type="text/babel">
+/* beyond-proving-page.jsx — Workshop */
+
+function App() {
+  return (<>
+    <Nav activePage="workshop" />
+
+    {/* HERO */}
+    <section className="page-hero">
+      <div className="page-hero__watermark">Beyond</div>
+      <div className="page-hero__inner">
+        <span className="tag">Beyond Proving — Free Workshop — London &amp; Online</span>
+        <h1 className="grad-text" style={{ marginTop:'1.5rem', marginBottom:'1.5rem' }}>Something Is Costing You More Than It Should.</h1>
+        <p className="page-hero__sub">Not your effort. Not your standards. Something underneath both of those. This is a free 60-minute workshop that gives you a different perspective on what that is.</p>
+        <div className="btn-row">
+          <a href="#register" className="btn btn--neon">Reserve a Place →</a>
+          <a href="the-work.html" className="btn btn--glass">See The Full Work</a>
+        </div>
+        <div className="chips">
+          <span className="chip">Free</span><span className="chip">60 Minutes</span><span className="chip">London &amp; Online</span><span className="chip">No Prior Experience</span>
+        </div>
+      </div>
+    </section>
+
+    {/* THE PREMISE */}
+    <section className="sec sec--teal">
+      <div className="sec__inner">
+        <div className="two-col">
+          <div>
+            <span className="tag">What we are looking at</span>
+            <h2 style={{ marginTop:'0.75rem' }}>It Does Not Feel Like Fear.</h2>
+            <div className="body-text" style={{ color:'rgba(255,255,255,0.6)' }}>
+              <p>Most people working hard, caring deeply, and holding themselves to a high standard are running on an energy source that is quietly exhausting them. It does not feel like fear. It feels like drive. Like conscientiousness. Like being someone who takes things seriously.</p>
+              <p>There are two versions of it. One contracts inward: avoiding conflict, making the self smaller. The other expands outward: needing to demonstrate something, to be seen as capable. Fear shrinks. Need drives. Same root. Opposite directions. Same cost.</p>
+              <p>This workshop is not about identifying which version you run. It is about giving you a direct experience of what it feels like when neither of them is running.</p>
+            </div>
+          </div>
+          <div>
+            <div className="glass detail-box" style={{ background:'rgba(255,255,255,0.05)', marginBottom:'0.75rem' }}>
+              <span className="tag">The ground</span>
+              <p style={{ fontSize:'1.05rem', fontWeight:300, color:'#fff', lineHeight:1.65, marginTop:'0.75rem' }}>The ground is already there. The work is not building it. The work is learning to feel it.</p>
+            </div>
+            <div className="glass detail-box" style={{ background:'rgba(255,255,255,0.05)' }}>
+              <div className="body-text" style={{ color:'rgba(255,255,255,0.55)' }}>
+                <p>Sixty minutes. Nothing to read in advance. No prior experience with coaching or personal development required.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* FOUR MOVEMENTS */}
+    <section className="sec sec--dark">
+      <div className="sec__inner">
+        <span className="tag">What happens in the room</span>
+        <h2 className="grad-text" style={{ marginTop:'0.75rem', display:'inline-block' }}>Four Movements. Sixty Minutes.</h2>
+        <div className="movements">
+          {[['01','The Premise','We name the mechanism. Not abstractly. Through the texture of ordinary life: the meeting you went quiet in, the standard you held yourself to that left you more depleted than the work itself, the version of drive that never quite felt like enough.'],
+            ['02','The Illustration','Two stories from lived experience, showing the same root running in two different directions. Not theory. The kind of honest personal account that makes a room stop thinking "I am not like that" and start wondering which direction theirs runs.'],
+            ['03','The Practice','A guided meditation. This is the heart of the workshop. You are being given space to feel the ground beneath the proving. People consistently report this as the moment something shifts.'],
+            ['04','The Debrief','A guided conversation. A space to name what changed, and to begin connecting that felt experience back to the pattern the opening named. If this is available to you, what has been in the way?']
+          ].map(([n, t, d]) => (
+            <div key={n} className="glass glass--glow movement">
+              <span className="movement__num">{n}</span>
+              <div><p className="movement__title">{t}</p><p className="movement__desc">{d}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* WHAT YOU LEAVE WITH */}
+    <section className="sec sec--surface">
+      <div className="sec__inner">
+        <div className="two-col">
+          <div>
+            <span className="tag">What you leave with</span>
+            <h3 style={{ marginTop:'0.75rem' }}>A Perspective You Did Not Have When You Walked In.</h3>
+            <div className="body-text">
+              <p>Not a framework to apply. Not a set of tools or techniques. Not homework.</p>
+              <p>A direct, felt experience of the difference between operating from proving energy and operating from your natural state. Once you have felt that difference in your body, you have a reference point. Something to return to.</p>
+            </div>
+          </div>
+          <div>
+            <div className="glass detail-box" style={{ marginBottom:'0.75rem' }}>
+              <span className="tag" style={{ color:'var(--teal)' }}>This workshop does not</span>
+              <div className="body-text" style={{ marginTop:'0.75rem' }}><p>Imply you are broken. Offer a system that does the work for you. Require any prior experience. Make large claims about what will change.</p></div>
+            </div>
+            <div className="glass detail-box">
+              <span className="tag" style={{ color:'var(--teal)' }}>It does</span>
+              <div className="body-text" style={{ marginTop:'0.75rem' }}><p>Give you sixty minutes of honest contact with your own interior. Leave you with something real and specific. Open a question you may have been carrying for a long time.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* REGISTRATION */}
+    <section id="register" className="sec sec--accent" style={{ position:'relative', overflow:'hidden' }}>
+      <div className="cta-watermark">Reserve</div>
+      <div className="sec__inner" style={{ position:'relative', zIndex:2 }}>
+        <div className="two-col">
+          <div>
+            <span className="tag" style={{ color:'rgba(255,255,255,0.55)' }}>Beyond Proving — Free Workshop</span>
+            <h2 style={{ marginTop:'0.75rem' }}>Reserve Your Place.</h2>
+            <p style={{ fontSize:'1rem', fontWeight:300, lineHeight:1.78, color:'rgba(255,255,255,0.7)', maxWidth:420 }}>I read every registration personally. Once you submit, I will be in touch with dates, locations, and any details you need.</p>
+          </div>
+          <div>
+            <form name="workshop-registration" method="POST" data-netlify="true" action="thankyou.html" style={{ display:'flex', flexDirection:'column', gap:'0.75rem' }}>
+              <input type="hidden" name="form-name" value="workshop-registration"/>
+              <div className="form-field"><label className="form-label" style={{ color:'rgba(255,255,255,0.5)' }}>Your name</label><input type="text" name="name" placeholder="First and last name" required/></div>
+              <div className="form-field"><label className="form-label" style={{ color:'rgba(255,255,255,0.5)' }}>Your email</label><input type="email" name="email" placeholder="Where I can reach you" required/></div>
+              <div className="form-field"><label className="form-label" style={{ color:'rgba(255,255,255,0.5)' }}>Format preference</label>
+                <select name="format"><option value="" disabled>London in person or online?</option><option value="london">London — in person</option><option value="online">Online</option><option value="either">Either works for me</option></select>
+              </div>
+              <div className="form-field"><label className="form-label" style={{ color:'rgba(255,255,255,0.5)' }}>What brings you here?</label><textarea name="message" placeholder="A few words is enough." rows="4"></textarea></div>
+              <button type="submit" className="btn btn--dark" style={{ width:'100%', justifyContent:'center', marginTop:'0.5rem' }}>Reserve My Place →</button>
+              <p style={{ fontSize:'0.65rem', color:'rgba(255,255,255,0.35)', textAlign:'center' }}>I will be in touch personally within a few days.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* BRIDGE TO COHORT */}
+    <section className="sec sec--dark" style={{ paddingTop:'5rem', paddingBottom:'5rem' }}>
+      <div className="sec__inner" style={{ maxWidth:780 }}>
+        <span className="tag">What comes next</span>
+        <h3 style={{ marginTop:'0.75rem' }}>The Workshop Is the Beginning. Not the Work.</h3>
+        <div className="body-text" style={{ marginBottom:'2rem' }}>
+          <p>For others, the question that surfaces in the debrief — if this is available to me, what has been in the way — is one they want to take further. That is what Stage 1 is for. Four weeks, eight sessions, six to eight people.</p>
+        </div>
+        <a href="cohort.html" className="pull-link">See Stage 1: The Conflict Is You →</a>
+      </div>
+    </section>
+
+    <Footer />
+  </>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+</script>
+<script>
+// Custom cursor
+(function(){
+  var d=document.getElementById('cursorDot');
+  if(!d||window.matchMedia('(pointer:coarse)').matches)return;
+  var mx=0,my=0,cx=0,cy=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;d.classList.add('active')});
+  document.addEventListener('mouseleave',function(){d.classList.remove('active')});
+  var sel='a,button,[role=button],.glass,.stage,.btn,.testi,.rec-card';
+  document.addEventListener('mouseover',function(e){if(e.target.closest(sel))d.classList.add('hover')});
+  document.addEventListener('mouseout',function(e){if(e.target.closest(sel))d.classList.remove('hover')});
+  function tick(){cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;d.style.left=cx-8+'px';d.style.top=cy-8+'px';requestAnimationFrame(tick)}
+  tick();
+})();
+</script>
+</body>
+</html>
